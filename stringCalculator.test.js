@@ -1,3 +1,5 @@
+const { default: expect } = require("expect");
+const { it } = require("node:test");
 const { add } = require("./stringCalculator");
 
 describe("String Calculator", () => {
@@ -11,5 +13,11 @@ describe("String Calculator", () => {
     expect(add("1")).toBe(1);
 
     expect(add("123")).toBe(123);
+  });
+
+  it("should return sum for two comma separated numbers", () => {
+    expect(add("1,2")).toBe(3);
+
+    expect(add("3, 7")).toBe(10);
   });
 });
