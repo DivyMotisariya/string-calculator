@@ -26,4 +26,14 @@ describe("String Calculator", () => {
 
     expect(add("3, 7,10,20")).toBe(40);
   });
+
+  it("should return sum of numbers separted by a single new-line character", () => {
+    expect(add("1\n2,3")).toBe(6);
+  });
+
+  it("should return sum of numbers separted by multiple new-line characters", () => {
+    expect(add("1\n2\n3")).toBe(6);
+
+    expect(add("1\n2\n3,4")).toBe(10);
+  });
 });

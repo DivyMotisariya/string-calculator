@@ -8,7 +8,7 @@ const add = (str) => {
   }
 
   return str
-    .split(",")
+    .split(/[,\n]/)
     .map((num) => parseInt(num?.trim() || 0) || 0)
     .reduce((prev, curr) => prev + curr, 0);
 };
