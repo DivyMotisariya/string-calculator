@@ -54,4 +54,18 @@ describe("String Calculator", () => {
 
     expect(add("1\n2\n3,4")).toBe(10);
   });
+
+  it("should throw error for single negative number", () => {
+    expect(() => add("-1")).toThrow("negative numbers not allowed: -1");
+  });
+
+  it("should throw error for multiple negative number", () => {
+    expect(() => add("-1,2, 10")).toThrow("negative numbers not allowed: -1");
+
+    expect(() => add("1,-2")).toThrow("negative numbers not allowed: -2");
+
+    expect(() => add("1,-2,3,-4,5,-6")).toThrow(
+      "negative numbers not allowed: -2, -4, -6"
+    );
+  });
 });

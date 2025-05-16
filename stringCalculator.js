@@ -4,7 +4,13 @@ const add = (str) => {
   }
 
   if (!isNaN(str?.trim())) {
-    return parseInt(str?.trim() || 0) || 0;
+    let numToReturn = parseInt(str?.trim() || 0) || 0;
+
+    if (numToReturn < 0) {
+      throw new Error(`negative numbers not allowed: ${numToReturn}`);
+    }
+
+    return numToReturn;
   }
 
   let delimiters = /[,\n]/;
@@ -17,10 +23,19 @@ const add = (str) => {
     delimiters = new RegExp(`[,\n${customDelimiter}]`);
   }
 
-  return numsToAdd
+  let nums = numsToAdd
     .split(delimiters)
-    .map((num) => parseInt(num?.trim() || 0) || 0)
-    .reduce((prev, curr) => prev + curr, 0);
+    .map((num) => parseInt(num?.trim() || 0) || 0);
+
+  let negativeNums = nums?.filter((num) => num < 0);
+
+  if (negativeNums?.length) {
+    throw new Error(
+      `negative numbers not allowed: ${negativeNums?.join(", ")}`
+    );
+  }
+
+  return nums.reduce((prev, curr) => prev + curr, 0);
 };
 
 module.exports = { add };
