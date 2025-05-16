@@ -58,7 +58,8 @@ const validateNegativeNum = (numsToAdd) => {
 };
 
 const calculateSum = (numsToAdd) => {
-  return numsToAdd.reduce((prev, curr) => prev + curr, 0);
+  let finalNums = numsToAdd?.filter((num) => num <= 1000);
+  return finalNums?.reduce((prev, curr) => prev + curr, 0) || 0;
 };
 
 module.exports = { add };

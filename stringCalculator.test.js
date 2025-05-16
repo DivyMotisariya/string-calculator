@@ -68,4 +68,10 @@ describe("String Calculator", () => {
       "negative numbers not allowed: -2, -4, -6"
     );
   });
+
+  it("should not add numbers > 1000", () => {
+    expect(add("1000,2")).toBe(1002);
+
+    expect(add("1001,2")).toBe(2);
+  });
 });
