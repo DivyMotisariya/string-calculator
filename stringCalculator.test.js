@@ -20,4 +20,10 @@ describe("String Calculator", () => {
 
     expect(add("3, 7")).toBe(10);
   });
+
+  it("should return sum for multiple comma separated numbers", () => {
+    expect(add("1,2,3,4,5")).toBe(15);
+
+    expect(add("3, 7,10,20")).toBe(40);
+  });
 });
