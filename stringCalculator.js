@@ -1,3 +1,6 @@
+const DEFAULT_DELIM = /[,\n]/;
+const CUSTOM_DELIM_PREFIX = "//";
+
 const add = (str) => {
   if (!str?.trim()) {
     return 0;
@@ -6,36 +9,56 @@ const add = (str) => {
   if (!isNaN(str?.trim())) {
     let numToReturn = parseInt(str?.trim() || 0) || 0;
 
-    if (numToReturn < 0) {
-      throw new Error(`negative numbers not allowed: ${numToReturn}`);
-    }
+    validateNegativeNum([numToReturn]);
 
     return numToReturn;
   }
 
-  let delimiters = /[,\n]/;
-  let numsToAdd = str;
+  let { delimiters, numsToAdd } = parseInputs(str);
 
-  if (str?.startsWith("//")) {
-    let customDelimiter = str?.charAt(2); // delimiter is at 3rd position, so taking 2nd index value
-    numsToAdd = str?.substring(4); // removing 2x'/', 1x'delimiter', and 1x'\n'
+  let nums = parseNums(numsToAdd, delimiters);
 
-    delimiters = new RegExp(`[,\n${customDelimiter}]`);
+  validateNegativeNum(nums);
+
+  return calculateSum(nums);
+};
+
+const parseInputs = (inputStr) => {
+  if (inputStr?.startsWith(CUSTOM_DELIM_PREFIX)) {
+    let customDelimiter = inputStr?.charAt(2); // delimiter is at 3rd position, so taking 2nd index value
+    let numsToAdd = inputStr?.substring(4); // removing 2x'/', 1x'delimiter', and 1x'\n'
+    let delimiters = new RegExp(`[,\n${customDelimiter}]`);
+
+    return {
+      delimiters,
+      numsToAdd,
+    };
   }
 
-  let nums = numsToAdd
+  return {
+    delimiters: DEFAULT_DELIM,
+    numsToAdd: inputStr,
+  };
+};
+
+const parseNums = (numsToAdd, delimiters) => {
+  return numsToAdd
     .split(delimiters)
     .map((num) => parseInt(num?.trim() || 0) || 0);
+};
 
-  let negativeNums = nums?.filter((num) => num < 0);
+const validateNegativeNum = (numsToAdd) => {
+  let negativeNums = numsToAdd?.filter((num) => num < 0);
 
   if (negativeNums?.length) {
     throw new Error(
       `negative numbers not allowed: ${negativeNums?.join(", ")}`
     );
   }
+};
 
-  return nums.reduce((prev, curr) => prev + curr, 0);
+const calculateSum = (numsToAdd) => {
+  return numsToAdd.reduce((prev, curr) => prev + curr, 0);
 };
 
 module.exports = { add };
