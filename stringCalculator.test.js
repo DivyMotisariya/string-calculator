@@ -36,4 +36,22 @@ describe("String Calculator", () => {
 
     expect(add("1\n2\n3,4")).toBe(10);
   });
+
+  it("should return sum of numbers separted by a custom-delimiter", () => {
+    expect(add("//;\n2;4")).toBe(6);
+
+    expect(add("//^\n5^10")).toBe(15);
+  });
+
+  it("should return sum of numbers separted by multiple custom-delimiters", () => {
+    expect(add("//;\n2;4;6;8")).toBe(20);
+
+    expect(add("//^\n5^10^10")).toBe(25);
+  });
+
+  it("should return sum of numbers separted by multiple custom-delimiters", () => {
+    expect(add("1\n2\n3")).toBe(6);
+
+    expect(add("1\n2\n3,4")).toBe(10);
+  });
 });
